@@ -1,48 +1,111 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { auth, db } from "./firebase.js";
 
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB_wPvyNitrXT55sBoEbl9t40jPME0ZXd0",
-  authDomain: "reporttrack-e6fa8.firebaseapp.com",
-  projectId: "reporttrack-e6fa8",
-  storageBucket: "reporttrack-e6fa8.firebasestorage.app",
-  messagingSenderId: "737341518076",
-  appId: "1:737341518076:web:fc0110cafb380c15986779",
-  measurementId: "G-4DVW6BTN5W"
+import {
+doc,
+setDoc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* Register Marketer */
+
+window.registerMarketer = async () => {
+
+const name =
+document.getElementById("name").value;
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+try {
+
+const userCredential =
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+await setDoc(
+doc(db,"users",userCredential.user.uid),
+{
+name:name,
+email:email,
+role:"marketer"
+}
+);
+
+alert("Registration Successful");
+
+window.location="index.html";
+
+}
+catch(error){
+
+alert(error.message);
+
+}
+
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+/* Login */
 
-window.register = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+window.loginUser = async () => {
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      alert("Registration Successful");
-      window.location = "index.html";
-    })
-    .catch(error => {
-      alert(error.message);
-    });
-};
+const email =
+document.getElementById("loginEmail").value;
 
-window.login = function () {
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
+const password =
+document.getElementById("loginPassword").value;
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      alert("Login Successful");
-      window.location = "dashboard.html";
-    })
-    .catch(error => {
-      alert(error.message);
-    });
+const selectedRole =
+document.getElementById("role").value;
+
+try{
+
+const userCredential =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const uid =
+userCredential.user.uid;
+
+const docSnap =
+await getDoc(
+doc(db,"users",uid)
+);
+
+const userData =
+docSnap.data();
+
+if(userData.role === selectedRole){
+
+window.location =
+"dashboard.html";
+
+}else{
+
+alert("Wrong Role Selected");
+
+}
+
+}
+catch(error){
+
+alert(error.message);
+
+}
+
 };

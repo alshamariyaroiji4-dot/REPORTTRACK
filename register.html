@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register To ReportTrack</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Marketer Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
 
-<h2>Register To ReportTrack</h2>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
 
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
+<div class="bg-white p-8 rounded-xl shadow-lg w-96">
 
-<button onclick="register()">Register</button>
+<h2 class="text-2xl font-bold mb-5 text-center">
+Marketer Registration
+</h2>
+
+<input
+id="name"
+placeholder="Name"
+class="w-full border p-3 rounded mb-3">
+
+<input
+id="email"
+type="email"
+placeholder="Email"
+class="w-full border p-3 rounded mb-3">
+
+<input
+id="password"
+type="password"
+placeholder="Password"
+class="w-full border p-3 rounded mb-4">
+
+<button
+onclick="registerMarketer()"
+class="w-full bg-green-600 text-white p-3 rounded">
+
+Register
+
+</button>
+
+</div>
 
 <script type="module" src="script.js"></script>
 
