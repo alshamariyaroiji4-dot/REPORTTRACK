@@ -1,94 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - REPORTTRACK</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100">
 
-<div class="flex min-h-screen">
+<div class="p-6">
 
-<!-- Sidebar -->
-<aside class="w-72 bg-blue-900 text-white p-6">
+<h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
-<h1 class="text-3xl font-extrabold mb-8">REPORTTRACK</h1>
+<div class="grid grid-cols-2 gap-4">
 
-<nav class="space-y-4 font-semibold">
-
-<a href="admin-dashboard.html" class="block hover:bg-blue-700 p-2 rounded">Dashboard</a>
-<a href="create-report.html" class="block hover:bg-blue-700 p-2 rounded">Create Report</a>
-<a href="reports.html" class="block hover:bg-blue-700 p-2 rounded">View Reports</a>
-<a href="profile.html" class="block hover:bg-blue-700 p-2 rounded">Profile</a>
-
-<button onclick="logoutUser()" class="w-full text-left bg-red-600 hover:bg-red-700 p-2 rounded mt-6">
-Logout
-</button>
-
-</nav>
-
-</aside>
-
-<!-- Main -->
-<main class="flex-1 p-8">
-
-<h2 class="text-4xl font-extrabold mb-6">Admin Dashboard</h2>
-
-<!-- Cards -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-<div class="bg-white p-6 rounded-xl shadow">
-<h3 class="font-bold">Total Reports</h3>
-<p id="totalReports" class="text-3xl font-extrabold text-blue-600">0</p>
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow">
-<h3 class="font-bold">Pending</h3>
-<p id="pendingReports" class="text-3xl font-extrabold text-yellow-500">0</p>
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow">
-<h3 class="font-bold">Approved</h3>
-<p id="approvedReports" class="text-3xl font-extrabold text-green-600">0</p>
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow">
-<h3 class="font-bold">Marketers</h3>
-<p id="totalMarketers" class="text-3xl font-extrabold text-purple-600">0</p>
-</div>
+<div class="bg-white p-4 shadow rounded">📄 View Reports</div>
+<div class="bg-white p-4 shadow rounded">👤 View Marketers</div>
+<div class="bg-white p-4 shadow rounded">📊 Analytics</div>
+<div class="bg-white p-4 shadow rounded">⚙️ Profile</div>
 
 </div>
 
-<!-- Recent Reports -->
-<div class="mt-10 bg-white p-6 rounded-xl shadow">
-
-<h3 class="text-xl font-bold mb-4">Recent Reports</h3>
-
-<table class="w-full">
-
-<thead>
-<tr class="bg-blue-900 text-white">
-<th class="p-2">Title</th>
-<th>Status</th>
-<th>Date</th>
-</tr>
-</thead>
-
-<tbody id="recentReports"></tbody>
-
-</table>
-
 </div>
-
-</main>
-
-</div>
-
-<script type="module" src="js/dashboard.js"></script>
-<script type="module" src="js/auth.js"></script>
 
 </body>
 </html>

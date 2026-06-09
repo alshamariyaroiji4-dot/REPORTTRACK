@@ -1,85 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Register</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
+  <title>Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 flex justify-center items-center h-screen">
 
-<div class="flex items-center justify-center min-h-screen">
+<div class="bg-white p-8 rounded-xl shadow w-96">
 
-<div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+<h1 class="text-2xl font-bold mb-5">Marketer Register</h1>
 
-<h2 class="text-4xl font-extrabold text-center text-blue-700 mb-6">
+<input id="name" placeholder="Name" class="w-full border p-3 mb-3">
+<input id="email" type="email" placeholder="Email" class="w-full border p-3 mb-3">
+<input id="password" type="password" placeholder="Password" class="w-full border p-3 mb-3">
 
+<button onclick="register()" class="bg-green-600 text-white w-full p-3 rounded">
 Register
-
-</h2>
-
-<input
-id="name"
-type="text"
-placeholder="Full Name"
-class="w-full border p-3 rounded-lg mb-4">
-
-<input
-id="email"
-type="email"
-placeholder="Email"
-class="w-full border p-3 rounded-lg mb-4">
-
-<input
-id="password"
-type="password"
-placeholder="Password"
-class="w-full border p-3 rounded-lg mb-4">
-
-<select
-id="role"
-class="w-full border p-3 rounded-lg mb-4">
-
-<option value="admin">Admin</option>
-
-<option value="marketer">Marketer</option>
-
-</select>
-
-<button
-id="registerBtn"
-class="bg-green-600 hover:bg-green-700 text-white font-bold w-full p-3 rounded-lg">
-
-Create Account
-
 </button>
 
-<p class="mt-4 text-center">
-
-Already have an account?
-
-<a href="login.html"
-class="text-blue-600 font-bold">
-
-Login
-
-</a>
-
-</p>
-
 </div>
 
-</div>
-
-<script type="module" src="js/auth.js"></script>
-
+<script type="module" src="script.js"></script>
 </body>
-
 </html>
