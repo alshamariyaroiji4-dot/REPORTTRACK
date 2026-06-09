@@ -1,3 +1,5 @@
+// Firebase SDK Imports
+
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -6,6 +8,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import { getFirestore }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Firebase Configuration
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_wPvyNitrXT55sBoEbl9t40jPME0ZXd0",
@@ -17,7 +21,11 @@ const firebaseConfig = {
   measurementId: "G-4DVW6BTN5W"
 };
 
+// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
+
+// Services
 
 export const auth = getAuth(app);
 

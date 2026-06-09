@@ -1,8 +1,10 @@
-import { auth, db } from "./firebase.js";
+import { auth, db }
+from "./firebase-config.js";
 
 import {
 createUserWithEmailAndPassword,
-signInWithEmailAndPassword
+signInWithEmailAndPassword,
+signOut
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -13,9 +15,17 @@ getDoc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* Register Marketer */
 
-window.registerMarketer = async () => {
+// REGISTER
+
+const registerBtn =
+document.getElementById("registerBtn");
+
+if(registerBtn){
+
+registerBtn.addEventListener("click", async ()=>{
+
+try{
 
 const name =
 document.getElementById("name").value;
@@ -26,7 +36,17 @@ document.getElementById("email").value;
 const password =
 document.getElementById("password").value;
 
-try {
+const role =
+document.getElementById("role").value;
+
+if(
+name === "" ||
+email === "" ||
+password === ""
+){
+alert("Please fill all fields");
+return;
+}
 
 const userCredential =
 await createUserWithEmailAndPassword(
@@ -35,18 +55,23 @@ email,
 password
 );
 
+const uid =
+userCredential.user.uid;
+
 await setDoc(
-doc(db,"users",userCredential.user.uid),
+doc(db,"users",uid),
 {
 name:name,
 email:email,
-role:"marketer"
+role:role,
+createdAt:new Date()
 }
 );
 
 alert("Registration Successful");
 
-window.location="index.html";
+window.location.href =
+"login.html";
 
 }
 catch(error){
@@ -55,22 +80,27 @@ alert(error.message);
 
 }
 
-};
+});
 
-/* Login */
+}
 
-window.loginUser = async () => {
 
-const email =
-document.getElementById("loginEmail").value;
+// LOGIN
 
-const password =
-document.getElementById("loginPassword").value;
+const loginBtn =
+document.getElementById("loginBtn");
 
-const selectedRole =
-document.getElementById("role").value;
+if(loginBtn){
+
+loginBtn.addEventListener("click", async ()=>{
 
 try{
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
 
 const userCredential =
 await signInWithEmailAndPassword(
@@ -82,22 +112,29 @@ password
 const uid =
 userCredential.user.uid;
 
-const docSnap =
-await getDoc(
-doc(db,"users",uid)
-);
+const userRef =
+doc(db,"users",uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(userSnap.exists()){
 
 const userData =
-docSnap.data();
+userSnap.data();
 
-if(userData.role === selectedRole){
+if(userData.role === "admin"){
 
-window.location =
-"dashboard.html";
+window.location.href =
+"admin-dashboard.html";
 
-}else{
+}
+else{
 
-alert("Wrong Role Selected");
+window.location.href =
+"marketer-dashboard.html";
+
+}
 
 }
 
@@ -108,4 +145,31 @@ alert(error.message);
 
 }
 
-};
+});
+
+}
+
+
+
+// LOGOUT FUNCTION
+
+window.logoutUser =
+async function(){
+
+try{
+
+await signOut(auth);
+
+alert("Logged Out");
+
+window.location.href =
+"login.html";
+
+}
+catch(error){
+
+alert(error.message);
+
+}
+
+}
