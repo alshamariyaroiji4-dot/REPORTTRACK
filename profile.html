@@ -1,0 +1,133 @@
+import { db } from "./firebase-config.js";
+import {
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// CREATE REPORT
+const saveBtn = document.getElementById("saveReport");
+
+if (saveBtn) {
+
+saveBtn.addEventListener("click", async () => {
+
+const title = document.getElementById("title").value;
+const description = document.getElementById("description").value;
+const status = document.getElementById("status").value;
+
+await addDoc(collection(db, "reports"), {
+title,
+description,
+status,
+createdAt: new Date().toISOString()
+});
+
+alert("Report Created Successfully");
+
+window.location.href = "reports.html";
+
+});
+}
+
+
+// LOAD REPORTS
+async function loadReports() {
+
+const table = document.getElementById("reportTable");
+if (!table) return;
+
+const snap = await getDocs(collection(db, "reports"));
+
+let html = "";
+
+snap.forEach((d) => {
+
+const data = d.data();
+
+let color =
+data.status === "Approved"
+? "text-green-600 font-bold"
+: "text-yellow-600 font-bold";
+
+html += `
+<tr class="border-b">
+<td class="p-3">${data.title}</td>
+<td class="p-3 ${color}">${data.status}</td>
+<td class="p-3">${data.createdAt}</td>
+<td class="p-3">
+<button onclick="deleteReport('${d.id}')"
+class="bg-red-600 text-white px-3 py-1 rounded">
+Delete
+</button>
+</td>
+</tr>
+`;
+
+});
+
+table.innerHTML = html;
+}
+
+
+// DELETE REPORT
+window.deleteReport = async function(id) {
+
+await deleteDoc(doc(db, "reports", id));
+
+alert("Deleted Successfully");
+
+loadReports();
+
+};
+
+
+// SEARCH REPORTS
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+
+searchInput.addEventListener("keyup", async () => {
+
+const value = searchInput.value.toLowerCase();
+
+const snap = await getDocs(collection(db, "reports"));
+
+let html = "";
+
+snap.forEach((d) => {
+
+const data = d.data();
+
+if (data.title.toLowerCase().includes(value)) {
+
+html += `
+<tr class="border-b">
+<td class="p-3">${data.title}</td>
+<td class="p-3">${data.status}</td>
+<td class="p-3">${data.createdAt}</td>
+<td class="p-3">
+<button onclick="deleteReport('${d.id}')"
+class="bg-red-600 text-white px-3 py-1 rounded">
+Delete
+</button>
+</td>
+</tr>
+`;
+
+}
+
+});
+
+document.getElementById("reportTable").innerHTML = html;
+
+});
+
+}
+
+
+// INITIAL LOAD
+loadReports();
